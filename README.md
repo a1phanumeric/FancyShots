@@ -4,11 +4,11 @@ Python script to create fancy screenshots (mainly for apps / websites)
 ## What does this do?
 It turns this:
 
-![Source Image](https://github.com/a1phanumeric/FancyShots/blob/master/input-1.png?raw=true)
+![Source Image](https://github.com/a1phanumeric/FancyShots/blob/master/example-input.png?raw=true)
 
 Into this:
 
-![Converted Image](https://raw.githubusercontent.com/a1phanumeric/FancyShots/master/output-1.png)
+![Converted Image](https://raw.githubusercontent.com/a1phanumeric/FancyShots/master/example-output.png)
 
 ## How?
 The most basic usage is as follows:
