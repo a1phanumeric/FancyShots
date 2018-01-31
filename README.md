@@ -20,7 +20,8 @@ Where `input.png` is your original image, and `output.png` is where you'd like t
 ### Options
 The following options are available to use to configure your output image:
 
-```usage: fancyshots.py [-h] [-t TILT] [-a SHADOWALPHA] [-d DEPTH] [-s DEPTHSTEP]
+```
+usage: fancyshots.py [-h] [-t TILT] [-a SHADOWALPHA] [-d DEPTH] [-s DEPTHSTEP]
                      [-v]
                      src_path dst_path
 
