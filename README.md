@@ -1,6 +1,9 @@
 # FancyShots
 Python script to create fancy screenshots (mainly for apps / websites)
 
+## REQUIREMENTS
+This app requires the PIL library, but as this is kinda old nowadays we recommend installing Pillow which is a fork of the original library and is still actively maintained. To do this, use the infamous `pip` application and run `pip install Pillow`. Once done, you're all set.
+
 ## What does this do?
 It turns this:
 
