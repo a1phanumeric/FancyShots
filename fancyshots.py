@@ -2,7 +2,19 @@ import sys
 import argparse
 from PIL import Image
 
-# Pass arguments
+# Crop the transparent pixels around the image
+# Credit: https://gist.github.com/odyniec/3470977
+def autocrop_image(image, border = 0):
+    bbox = image.getbbox()
+    image = image.crop(bbox)
+    (width, height) = image.size
+    width += border * 2
+    height += border * 2
+    cropped_image = Image.new("RGBA", (width, height), (0,0,0,0))
+    cropped_image.paste(image, (border, border))
+    return cropped_image
+
+# Pass 'n' parse arguments
 parser = argparse.ArgumentParser(description='Generate tilted images with depth')
 parser.add_argument("src_path", type=str, help='The source image file path')
 parser.add_argument("dst_path", type=str, help='The output image file path')
@@ -38,20 +50,35 @@ if(args.verbose):
 new_width = width + (int(round(xshift))*2)
 
 # Tilt image
-img = img.transform((new_width, height+200), Image.AFFINE,
-        (1, m, -xshift if m > 0 else 0, 0, 1, 0), Image.BICUBIC)
+img = img.transform((new_width,
+                    height+200),
+                    Image.AFFINE,
+                    (1, m, -xshift if m > 0 else 0, 0, 1, 0),
+                    Image.BICUBIC)
 
 top_img = img.copy()
 bg_img = img.point(lambda p: p * args.shadowalpha)
 
 output_img = Image.new("RGBA",(new_width, height+200))
 
+# Add shadow copies
 startypos = args.depth * args.depthstep
 for x in range(0,args.depth):
     ypos = startypos - (x*args.depthstep)
     output_img.paste(bg_img, (0, ypos), bg_img)
 
+# Add top (main) image, clean the image and save
 output_img.paste(top_img, (0, ypos), top_img)
-output_img.save(args.dst_path)
+output_img = autocrop_image(output_img)
+
+# Should calculate this properly, but for now (and using the
+# default settings) this works fine. What we're doing is
+# cropping a few pixles off the bottom - otherwise it looks
+# a bit weird on the final release
+if(args.verbose):
+    print('Cropping off ' + str((2*(args.depth/3))) + 'pixels from the bottom')
+(width, height) = output_img.size
+crop_area = (0, 0, width, height-(args.depth*2))
+output_img.crop(crop_area).save(args.dst_path)
 
 print('Image processing complete: ' + args.dst_path)
