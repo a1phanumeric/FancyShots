@@ -75,8 +75,6 @@ output_img = autocrop_image(output_img)
 # default settings) this works fine. What we're doing is
 # cropping a few pixles off the bottom - otherwise it looks
 # a bit weird on the final release
-if(args.verbose):
-    print('Cropping off ' + str((2*(args.depth/3))) + 'pixels from the bottom')
 (width, height) = output_img.size
 crop_area = (0, 0, width, height-(args.depth*2))
 output_img.crop(crop_area).save(args.dst_path)
